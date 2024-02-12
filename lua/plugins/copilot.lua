@@ -19,6 +19,7 @@ return {
     opts = {
       show_help = "yes", -- Show help text for CopilotChatInPlace, default: yes
       debug = false,
+      mode = "split",
       promts = {
         Review = "Review the following code and provide concise suggestions.",
         Tests = "Briefly explain how the selected code works, then generate unit tests.",
@@ -26,26 +27,19 @@ return {
       },
     },
     build = function()
-      vim.notify("Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
+      vim.defer_fn(function()
+        vim.cmd("UpdateRemotePlugins")
+        vim.notify("CopilotChat - Updated remote plugins. Please restart Neovim.")
+      end, 3000)
     end,
     event = "VeryLazy",
     keys = {
-      { "<leader>aR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
       { "<leader>ae", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-      { "<leader>ar", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
       { "<leader>at", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
-      {
-        "<leader>av",
-        ":CopilotChatVisual",
-        mode = "x",
-        desc = "CopilotChat - Open in vertical split",
-      },
-      {
-        "<leader>ai",
-        ":CopilotChatInPlace<cr>",
-        mode = "x",
-        desc = "CopilotChat - Run in-place code",
-      },
+      { "<leader>ar", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
+      { "<leader>aR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
+      { "<leader>av", "<cmd>CopilotChatVisual<cr>", desc = "CopilotChat - Visual", mode = "v" },
+      { "<leader>ai", "<cmd>CopilotChatInPlace<cr>", desc = "CopilotChat - In-place", mode = { "n", "v" } },
     },
   },
 }
