@@ -3,6 +3,8 @@ return {
   opts = {
     formatters_by_ft = {
       ["json"] = { "fixjson" },
+      ["markdown"] = { "mdformat" },
+      ["sh"] = { "shfmt" },
       ["*"] = { "trim_whitespace" },
     },
     formatters = {
