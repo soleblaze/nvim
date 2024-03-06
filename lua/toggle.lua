@@ -30,7 +30,6 @@ M.location = function()
   vim.cmd("lopen")
 end
 
-
 M.relativenumber = function()
   if vim.o.relativenumber then
     vim.o.relativenumber = false
@@ -40,7 +39,6 @@ M.relativenumber = function()
     vim.notify("relativenumber enabled")
   end
 end
-
 
 local diagnostictoggle = true
 
