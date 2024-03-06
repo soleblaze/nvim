@@ -6,9 +6,13 @@ return {
       "fixjson",
       "hclfmt",
       "mdformat",
+      "isort",
+      "prettierd",
       "rubocop",
       "yamlfix",
       "yamllint",
+      "tflint",
+      "trivy",
     },
   },
 }
