@@ -13,18 +13,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
-if vim.env.NVIM_AI_SUPPORT then
-  COPILOT_PLUGIN = { import = "lazyvim.plugins.extras.coding.copilot" }
-else
-  COPILOT_PLUGIN = ""
-end
-
 require("lazy").setup({
   spec = {
     {
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
     },
+    { import = "lazyvim.plugins.extras.coding.copilot" },
     { import = "lazyvim.plugins.extras.dap.core" },
     { import = "lazyvim.plugins.extras.editor.navic" },
     { import = "lazyvim.plugins.extras.formatting.black" },
@@ -41,7 +36,6 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.project" },
     { import = "lazyvim.plugins.extras.vscode" },
     { import = "plugins" },
-    COPILOT_PLUGIN,
   },
   defaults = {
     lazy = false,
@@ -50,6 +44,7 @@ require("lazy").setup({
   checker = {
     enabled = true,
     frequency = 259200,
+    notify = false,
   },
   performance = {
     rtp = {
@@ -63,4 +58,17 @@ require("lazy").setup({
       },
     },
   },
+})
+
+local function augroup(name)
+  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+end
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = augroup("autoupdate"),
+  callback = function()
+    if require("lazy.status").has_updates then
+      require("lazy").update({ show = false })
+    end
+  end,
 })
