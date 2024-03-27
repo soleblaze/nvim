@@ -20,9 +20,9 @@ vim.opt.grepprg = "rg"
 vim.opt.wildmode = { "list", "longest" }
 
 require("lazy").setup({
+  root = vim.fn.stdpath("data") .. "/vscode",
   "nvim-treesitter/nvim-treesitter",
   version = false, -- last release is way too old and doesn't work on Windows
-  root = vim.fn.stdpath("data") .. "/vscode",
   build = ":TSUpdate",
   init = function()
     require("nvim-treesitter.query_predicates")
@@ -359,39 +359,39 @@ require("lazy").setup({
 -- Keymaps
 local keymap = vim.api.nvim_set_keymap
 
-local function notify(cmd)
-  return string.format("<cmd>call VSCodeNotify('%s')<CR>", cmd)
+local function action(cmd)
+  return string.format("<cmd>lua require('vscode-neovim').action('%s')<CR>", cmd)
 end
 
-keymap("n", "<leader>a", require("vscode-neovim").action("workbench.action.openQuickChat.copilot"), { silent = true })
-keymap("n", "<leader>D", require("vscode-neovim").action("editor.action.revealDefinitionAside"), { silent = true })
-keymap("n", "<leader>F", require("vscode-neovim").action("editor.action.formatDocument"), { silent = true })
+keymap("n", "<leader>a", action("workbench.action.openQuickChat.copilot"), { silent = true })
+keymap("n", "<leader>D", action("editor.action.revealDefinitionAside"), { silent = true })
+keymap("n", "<leader>F", action("editor.action.formatDocument"), { silent = true })
 keymap("n", "<leader>P", '"+P', { silent = true })
-keymap("n", "<leader>d", require("vscode-neovim").action("workbench.action.closeWindow"), { silent = true })
-keymap("n", "<leader>D", require("vscode-neovim").action("editor.action.showDefinitionPreviewHover"), { silent = true })
-keymap("n", "<leader>e", require("vscode-neovim").action("problems.action.open"), { silent = true })
-keymap("n", "<leader>ff", require("vscode-neovim").action("workbench.action.quickOpen"), { silent = true })
-keymap("n", "<leader>fg", require("vscode-neovim").action("workbench.action.findInFiles"), { silent = true })
-keymap("n", "<leader>fp", require("vscode-neovim").action("projectManager.listProjects"), { silent = true })
-keymap("n", "<leader>fr", require("vscode-neovim").action("references-view.findReferences"), { silent = true })
-keymap("n", "<leader>gb", require("vscode-neovim").action("gitlens.toggleFileBlame"), { silent = true })
-keymap("n", "<leader>gd", require("vscode-neovim").action("editor.action.revealDefinition"), { silent = true })
-keymap("n", "<leader>gi", require("vscode-neovim").action("editor.action.goToImplementation"), { silent = true })
-keymap("n", "<leader>gl", require("vscode-neovim").action("extension.copyGitHubLinkToClipboard"), { silent = true })
-keymap("n", "<leader>gr", require("vscode-neovim").action("editor.action.goToReferences"), { silent = true })
-keymap("n", "<leader>gs", require("vscode-neovim").action("workbench.action.gotoSymbols"), { silent = true })
-keymap("n", "<leader>gt", require("vscode-neovim").action("editor.action.goToTypeDefinition"), { silent = true })
-keymap("n", "<leader>h", require("vscode-neovim").action("editor.action.showHover"), { silent = true })
-keymap("n", "<leader>k", require("vscode-neovim").action("extension.dash.specific"), { silent = true })
-keymap("n", "<leader>ls", require("vscode-neovim").action("workbench.action.showAllSymbols"), { silent = true })
+keymap("n", "<leader>d", action("workbench.action.closeWindow"), { silent = true })
+keymap("n", "<leader>D", action("editor.action.showDefinitionPreviewHover"), { silent = true })
+keymap("n", "<leader>e", action("problems.action.open"), { silent = true })
+keymap("n", "<leader>ff", action("workbench.action.quickOpen"), { silent = true })
+keymap("n", "<leader>fg", action("workbench.action.findInFiles"), { silent = true })
+keymap("n", "<leader>fp", action("projectManager.listProjects"), { silent = true })
+keymap("n", "<leader>fr", action("references-view.findReferences"), { silent = true })
+keymap("n", "<leader>gb", action("gitlens.toggleFileBlame"), { silent = true })
+keymap("n", "<leader>gd", action("editor.action.revealDefinition"), { silent = true })
+keymap("n", "<leader>gi", action("editor.action.goToImplementation"), { silent = true })
+keymap("n", "<leader>gl", action("extension.copyGitHubLinkToClipboard"), { silent = true })
+keymap("n", "<leader>gr", action("editor.action.goToReferences"), { silent = true })
+keymap("n", "<leader>gs", action("workbench.action.gotoSymbols"), { silent = true })
+keymap("n", "<leader>gt", action("editor.action.goToTypeDefinition"), { silent = true })
+keymap("n", "<leader>h", action("editor.action.showHover"), { silent = true })
+keymap("n", "<leader>k", action("extension.dash.specific"), { silent = true })
+keymap("n", "<leader>ls", action("workbench.action.showAllSymbols"), { silent = true })
 keymap("n", "<leader>p", '"+p', { silent = true })
-keymap("n", "<leader>rf", require("vscode-neovim").action("editor.action.refactor"), { silent = true })
-keymap("n", "<leader>rn", require("vscode-neovim").action("editor.action.rename"), { silent = true })
+keymap("n", "<leader>rf", action("editor.action.refactor"), { silent = true })
+keymap("n", "<leader>rn", action("editor.action.rename"), { silent = true })
 keymap("n", "<leader>y", '"+y', { silent = true })
-keymap("n", "[D", require("vscode-neovim").action("editor.action.marker.prevInFiles"), { silent = true })
-keymap("n", "[d", require("vscode-neovim").action("editor.action.marker.prev"), { silent = true })
-keymap("n", "]D", require("vscode-neovim").action("editor.action.marker.nextInFiles"), { silent = true })
-keymap("n", "]d", require("vscode-neovim").action("editor.action.marker.next"), { silent = true })
+keymap("n", "[D", action("editor.action.marker.prevInFiles"), { silent = true })
+keymap("n", "[d", action("editor.action.marker.prev"), { silent = true })
+keymap("n", "]D", action("editor.action.marker.nextInFiles"), { silent = true })
+keymap("n", "]d", action("editor.action.marker.next"), { silent = true })
 keymap("n", "gc", "<Plug>VSCodeCommentary", { silent = true })
 keymap("n", "gcc", "<Plug>VSCodeCommentaryLine", { silent = true })
 keymap("o", "gc", "<Plug>VSCodeCommentary", { silent = true })
